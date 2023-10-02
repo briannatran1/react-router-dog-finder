@@ -1,33 +1,47 @@
 import DogDetails from "./DogDetails";
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import fetchDogs from "./utils";
 import { useState } from "react";
 
 
 function DogList() {
-  // TODO: Declare state, move fetchdogs back to this function/component
-  const [list, setList] = useState(false);
+  const [isListDisplayed, setIsListDisplayed] = useState(false);
+  const [dogList, setDogList] = useState();
 
-  const dogs = fetchDogs();
-  console.log("DOGS", dogs, typeof dogs);
+  async function fetchDogs() {
+    let dogs;
+    if (dogList) {
+      dogs = dogList;
+    }
+    else {
+      const response = await fetch("http://localhost:5001/dogs");
+      dogs = await response.json();
 
-  // Takes array of Dog objects
-  // Loops through and makes <DogDetails /> for each, passing the dog as a prop and constructing the path dynamically based on name.
+      //updates state
+      setIsListDisplayed(curr => !curr);
+      setDogList(dogs);
+    }
 
-  // Pair async with setting state.
-  // Is there a way to make 1 API call, hold onto it, then manipulate the data that we get back.
+    console.log('dogs', dogs);
 
-  return (
-    <>
-      {dogs.map(dog => {
-        <>
-      <DogDetails dog={dog} />
-      <p><Link to={dog.name} >See this dog</Link></p>;
-        </>
-      })}
-    </>
-  );
+    /* Loops through and makes <DogDetails /> for each, passing the dog as a prop
+    and constructing the path dynamically based on name.*/
+    return (
+      <>
+        {dogs.map(dog => {
+          <>
+            <DogDetails dog={dog} />
+            <p><Link to={dog.name} >See this dog</Link></p>;
+          </>;
+        })}
 
+        {!isListDisplayed &&
+          <h1>Loading...</h1>}
+      </>
+    );
+  }
+
+  const data = fetchDogs();
+  console.log('data', data);
 
 }
 

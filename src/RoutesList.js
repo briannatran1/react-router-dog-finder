@@ -7,6 +7,7 @@ function RoutesList() {
     <Routes>
       <Route path='/dogs' element={<DogList />} />
       <Route path='/dogs/:name' element={<DogDetails />} />
+      <Route path='*' element={<DogList />} />
     </Routes>
   );
 }
