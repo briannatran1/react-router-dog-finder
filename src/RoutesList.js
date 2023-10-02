@@ -5,7 +5,7 @@ import DogDetails from './DogDetails';
 function RoutesList() {
   return (
     <Routes>
-      <Route path='/' element={<DogList />} />
+      <Route path='/dogs' element={<DogList />} />
       <Route path='/dogs/:name' element={<DogDetails />} />
     </Routes>
   );

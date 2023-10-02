@@ -6,6 +6,7 @@ function DogDetails({ dog }) {
   return (
     <>
       <h1>{name}</h1>
+      <h1>{dog.name}</h1>
       <ul>
 
       </ul>
