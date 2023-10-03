@@ -4,8 +4,6 @@ import { useState } from "react";
 
 
 function DogList({ dogList }) {
-  console.log("dogList", dogList);
-
   return (
     <>
       {dogList.map(dog => {

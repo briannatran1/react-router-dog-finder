@@ -7,7 +7,7 @@ import DogList from './DogList';
 import fetchDogs from './utils.js';
 
 function App() {
-  const [dogList, setDogList] = useState();
+  const [dogList, setDogList] = useState(null);
   const [isListDisplayed, setIsListDisplayed] = useState(false);
 
 
@@ -36,38 +36,18 @@ function App() {
   console.log("dogList 2", dogs);
 
   return (
-    <div>
-      <h1>Loading...</h1>
+    <div className="App">
+      <h1>Good luck!</h1>
+      <BrowserRouter>
+        <Nav />
+        <RoutesList />
+      </BrowserRouter>
+
+      {!isListDisplayed
+        ? <h1>Loading...</h1>
+        : <DogList dogList={dogList} />}
     </div>
   );
-
-
-}
-
-
-  // return(
-  //   <div>
-  // {!isListDisplayed
-  //       ? <h1>Loading...</h1>
-  //       : <DogList dogList={dogList} />}
-  //   </div>
-  // )
-
-
-  // return (
-  //   <div className="App">
-  //     <h1>Good luck!</h1>
-  //     <BrowserRouter>
-  //       <Nav />
-  //       <RoutesList />
-  //     </BrowserRouter>
-
-  //     {!isListDisplayed
-  //       ? <h1>Loading...</h1>
-  //       : <DogList dogList={dogList} />}
-  //   </div>
-  // );
-
 }
 
 export default App;
