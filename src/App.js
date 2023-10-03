@@ -1,51 +1,49 @@
 import './App.css';
 import RoutesList from './RoutesList';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { useState } from 'react';
 import Nav from './Nav';
-import DogList from './DogList';
-import fetchDogs from './utils.js';
+
+/** App
+ *
+ * Props: none
+ *
+ * State:
+ * - dogs: [{name...}]
+ * - isLoading: boolean
+ *
+ * App -> Routelist
+ */
 
 function App() {
+  // const [dogs, setDogs] = useState({
+  //   data: null,
+  //   isLoading: true
+  // })
+
   const [dogList, setDogList] = useState(null);
   const [isListDisplayed, setIsListDisplayed] = useState(false);
 
+  /** makes call to API to get dog info */
+  async function fetchDogs() {
+    const response = await fetch("http://localhost:5001/dogs");
 
-
-  async function controller() {
-    const dogs = await assignDogList();
-    setIsListDisplayed(state => true);
-
-    return dogs;
+    setDogList(response.data);
+    setIsListDisplayed(true);
   }
 
-  async function assignDogList() {
-    return await fetchDogs();
+  if (isListDisplayed) {
+    fetchDogs();
+    return <h1>Loading...</h1>;
   }
-
-  return dogList;
-
-
-  let dogs;
-  if (dogList === undefined) {
-    dogs = controller(dogList);
-  } else {
-    dogs = dogList;
-  }
-
-  console.log("dogList 2", dogs);
 
   return (
     <div className="App">
-      <h1>Good luck!</h1>
+      <h1>Welcome!</h1>
       <BrowserRouter>
-        <Nav />
-        <RoutesList />
+        <Nav dogs={dogList} />
+        <RoutesList dogs={dogList} />
       </BrowserRouter>
-
-      {!isListDisplayed
-        ? <h1>Loading...</h1>
-        : <DogList dogList={dogList} />}
     </div>
   );
 }
